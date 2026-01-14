@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -57,6 +58,7 @@ class HomeScreen extends StatelessWidget {
                     'Which character are you?',
                     Icons.auto_stories,
                     Colors.blue.shade50,
+                    onTap: () => context.push('/quiz'),
                   ),
                   _buildDestinyCard(
                     context,
@@ -64,6 +66,7 @@ class HomeScreen extends StatelessWidget {
                     'Find your true match.',
                     Icons.favorite_border,
                     Colors.pink.shade50,
+                    onTap: () => context.push('/love-match'),
                   ),
                   _buildDestinyCard(
                     context,
@@ -71,6 +74,7 @@ class HomeScreen extends StatelessWidget {
                     'Rank in the ton.',
                     Icons.stars_outlined,
                     Colors.amber.shade50,
+                    onTap: () {}, // TODO: Implement Society Test
                   ),
                 ],
               ),
@@ -171,34 +175,39 @@ class HomeScreen extends StatelessWidget {
     String title,
     String subtitle,
     IconData icon,
-    Color bgColor,
-  ) {
-    return Container(
-      width: 160,
-      margin: const EdgeInsets.all(8),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.black.withOpacity(0.05)),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, size: 40, color: Theme.of(context).colorScheme.primary),
-          const SizedBox(height: 16),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            subtitle,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 12, color: Colors.black54),
-          ),
-        ],
+    Color bgColor, {
+    VoidCallback? onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        width: 160,
+        margin: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: bgColor,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Colors.black.withOpacity(0.05)),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 40, color: Theme.of(context).colorScheme.primary),
+            const SizedBox(height: 16),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              subtitle,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 12, color: Colors.black54),
+            ),
+          ],
+        ),
       ),
     );
   }
