@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/localizations/app_localizations.dart';
 
 class LoveMatchScreen extends StatelessWidget {
   const LoveMatchScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Love Match'),
+        title: Text(localizations.loveMatch),
         elevation: 0,
       ),
       body: Center(
@@ -24,7 +27,7 @@ class LoveMatchScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               Text(
-                'Find Your Perfect Match',
+                localizations.findYourPerfectMatch,
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -32,7 +35,7 @@ class LoveMatchScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                'Answer a few questions to discover characters that match your preferences',
+                localizations.answerQuestions,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       color: Colors.grey[600],
                     ),
@@ -44,7 +47,7 @@ class LoveMatchScreen extends StatelessWidget {
                   context.push('/match-quiz');
                 },
                 icon: const Icon(Icons.quiz),
-                label: const Text('Start Quiz'),
+                label: Text(localizations.startQuiz),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 32,

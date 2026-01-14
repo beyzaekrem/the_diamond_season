@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/localizations/app_localizations.dart';
 import '../models/user_preferences.dart';
 import '../models/character_data.dart';
 import '../providers/character_data_provider.dart';
@@ -89,11 +90,12 @@ class _LoveMatchResultsScreenState
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     final charactersAsync = ref.watch(charactersProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Your Matches'),
+        title: Text(localizations.yourMatches),
         elevation: 0,
       ),
       body: charactersAsync.when(
@@ -120,7 +122,7 @@ class _LoveMatchResultsScreenState
               ),
               const SizedBox(height: 16),
               Text(
-                'Error loading matches',
+                (AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'))).errorLoadingMatches,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 8),
@@ -139,6 +141,8 @@ class _LoveMatchResultsScreenState
   }
 
   Widget _buildResults() {
+    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    
     if (_matches == null || _matches!.isEmpty) {
       return Center(
         child: Padding(
@@ -153,14 +157,14 @@ class _LoveMatchResultsScreenState
               ),
               const SizedBox(height: 24),
               Text(
-                'No Matches Found',
+                localizations.noMatchesFound,
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
               ),
               const SizedBox(height: 16),
               Text(
-                'We couldn\'t find any characters that match your preferences. Try adjusting your criteria.',
+                localizations.noMatchesDescription,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       color: Colors.grey[600],
                     ),
@@ -181,7 +185,7 @@ class _LoveMatchResultsScreenState
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
             child: Text(
-              'Found ${_matches!.length} ${_matches!.length == 1 ? 'Match' : 'Matches'}',
+              '${localizations.foundMatches} ${_matches!.length} ${_matches!.length == 1 ? localizations.match : localizations.matches}',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -236,7 +240,7 @@ class _LoveMatchResultsScreenState
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          '${character.age} years old • ${character.gender}',
+                          '${character.age} ${(AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'))).yearsOld} • ${character.gender}',
                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                 color: Colors.grey[600],
                               ),

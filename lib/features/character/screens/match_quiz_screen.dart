@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/localizations/app_localizations.dart';
 import '../models/match_quiz_question.dart';
 import '../models/user_preferences.dart';
 import '../data/match_quiz_data.dart';
@@ -17,6 +18,8 @@ class _MatchQuizScreenState extends State<MatchQuizScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     final questions = matchQuizQuestions;
 
     if (currentQuestionIndex >= questions.length) {
@@ -28,7 +31,7 @@ class _MatchQuizScreenState extends State<MatchQuizScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Find Your Match'),
+        title: Text(localizations.findYourMatch),
         elevation: 0,
       ),
       body: Column(
@@ -42,7 +45,7 @@ class _MatchQuizScreenState extends State<MatchQuizScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Question ${currentQuestionIndex + 1} of ${questions.length}',
+                      '${(AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'))).question} ${currentQuestionIndex + 1} ${(AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'))).ofText} ${questions.length}',
                       style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 14,
@@ -114,7 +117,9 @@ class _MatchQuizScreenState extends State<MatchQuizScreen> {
               child: OutlinedButton.icon(
                 onPressed: _previousQuestion,
                 icon: const Icon(Icons.arrow_back),
-                label: const Text('Previous Question'),
+                label: Text((AppLocalizations.of(context) ??
+                        AppLocalizations(const Locale('en')))
+                    .previousQuestion),
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24,
@@ -231,15 +236,17 @@ class _MatchQuizScreenState extends State<MatchQuizScreen> {
       );
     } catch (e) {
       // Show error dialog if something goes wrong
+      final localizations =
+          AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Error'),
-          content: Text('An error occurred: ${e.toString()}'),
+          title: Text(localizations.error),
+          content: Text('${localizations.anErrorOccurred}: ${e.toString()}'),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('OK'),
+              child: Text(localizations.ok),
             ),
           ],
         ),

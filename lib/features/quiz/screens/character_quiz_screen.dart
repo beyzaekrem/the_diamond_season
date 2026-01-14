@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/localizations/app_localizations.dart';
 import '../models/quiz_models.dart';
 import '../data/quiz_data.dart';
 
@@ -59,12 +60,13 @@ class _CharacterQuizScreenState extends ConsumerState<CharacterQuizScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     final currentQuestion = characterQuizQuestions[_currentQuestionIndex];
     final progress = (_currentQuestionIndex + 1) / characterQuizQuestions.length;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Character Quiz'),
+        title: Text(localizations.characterQuiz),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => context.pop(),
@@ -82,7 +84,7 @@ class _CharacterQuizScreenState extends ConsumerState<CharacterQuizScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Question ${_currentQuestionIndex + 1} of ${characterQuizQuestions.length}',
+                        '${(AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'))).question} ${_currentQuestionIndex + 1} ${(AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'))).ofText} ${characterQuizQuestions.length}',
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       Text(

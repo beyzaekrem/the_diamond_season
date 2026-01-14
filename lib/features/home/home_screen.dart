@@ -1,15 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../core/localizations/app_localizations.dart';
+import '../../core/providers/locale_provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final currentLocale = ref.watch(localeProvider);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('The Diamond Season'),
+        title: Text(localizations.appTitle),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.language),
+            onPressed: () {
+              ref.read(localeProvider.notifier).toggleLocale();
+            },
+            tooltip: currentLocale.languageCode == 'en' ? 'Türkçe' : 'English',
+          ),
           IconButton(
             icon: const Icon(Icons.person_outline),
             onPressed: () {},
@@ -27,11 +40,11 @@ class HomeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Good Morning,',
+                    localizations.goodMorning,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   Text(
-                    'Your Grace',
+                    localizations.yourGrace,
                     style: Theme.of(context).textTheme.displayMedium,
                   ),
                 ],
@@ -39,13 +52,13 @@ class HomeScreen extends StatelessWidget {
             ),
 
             // Featured Whisper Card
-            _buildSectionTitle(context, 'Latest Whispers'),
+            _buildSectionTitle(context, localizations.latestWhispers),
             _buildFeaturedWhisper(context),
 
             const SizedBox(height: 24),
 
             // Quick Actions (Quizzes, Tests)
-            _buildSectionTitle(context, 'Discover Your Destiny'),
+            _buildSectionTitle(context, localizations.discoverYourDestiny),
             SizedBox(
               height: 180,
               child: ListView(
@@ -54,24 +67,24 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   _buildDestinyCard(
                     context,
-                    'Character Quiz',
-                    'Which character are you?',
+                    localizations.characterQuiz,
+                    localizations.whichCharacterAreYou,
                     Icons.auto_stories,
                     Colors.blue.shade50,
                     onTap: () => context.push('/quiz'),
                   ),
                   _buildDestinyCard(
                     context,
-                    'Love Match',
-                    'Find your true match.',
+                    localizations.loveMatch,
+                    localizations.findYourTrueMatch,
                     Icons.favorite_border,
                     Colors.pink.shade50,
                     onTap: () => context.push('/love-match'),
                   ),
                   _buildDestinyCard(
                     context,
-                    'Society Test',
-                    'Rank in the ton.',
+                    localizations.societyTest,
+                    localizations.rankInTheTon,
                     Icons.stars_outlined,
                     Colors.amber.shade50,
                     onTap: () {}, // TODO: Implement Society Test
@@ -239,6 +252,7 @@ class HomeScreen extends StatelessWidget {
                   fontSize: 18,
                   fontFamily: 'Playfair Display',
                 ),
+
           ),
           const SizedBox(height: 16),
           const Text(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/localizations/app_localizations.dart';
 import '../models/quiz_models.dart';
 import '../data/quiz_data.dart';
 
@@ -20,9 +21,11 @@ class QuizResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Your Match'),
+        title: Text(localizations.yourMatch),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -64,7 +67,7 @@ class QuizResultScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    'You are...',
+                    localizations.youAre,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           fontStyle: FontStyle.italic,
                         ),
@@ -139,7 +142,7 @@ class QuizResultScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Match: ',
+                    '${localizations.match}: ',
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   Text(
@@ -162,12 +165,12 @@ class QuizResultScreen extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () => context.go('/home'),
-                    child: const Text('Return to Home'),
+                    child: Text(localizations.returnToHome),
                   ),
                   const SizedBox(height: 12),
                   OutlinedButton(
                     onPressed: () => context.go('/quiz'),
-                    child: const Text('Take Quiz Again'),
+                    child: Text(localizations.takeQuizAgain),
                   ),
                 ],
               ),
