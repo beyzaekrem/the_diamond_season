@@ -49,7 +49,7 @@ The goal of this project is to design a maintainable and scalable mobile archite
 ---
 
 ## Project Structure
-
+```
 android/ # Android configuration
 ios/ # iOS configuration
 lib/ # Dart source code
@@ -65,7 +65,7 @@ windows/ # Windows desktop support
 test/ # Unit tests
 pubspec.yaml # Flutter dependencies
 README.md # Documentation
-
+```
 
 ---
 
